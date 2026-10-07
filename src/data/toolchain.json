@@ -1,0 +1,265 @@
+{
+  "generatedAt": "2026-10-03T07:45:39.567Z",
+  "facets": {
+    "type": [
+      {
+        "value": "guide",
+        "label": "智能体指南(AGENTS.md)"
+      },
+      {
+        "value": "skill",
+        "label": "技能(Agent Skills)"
+      },
+      {
+        "value": "mcp",
+        "label": "MCP 服务"
+      }
+    ],
+    "scope": [
+      {
+        "value": "全局",
+        "label": "全局"
+      },
+      {
+        "value": "项目",
+        "label": "项目"
+      },
+      {
+        "value": "目录",
+        "label": "目录"
+      }
+    ],
+    "domain": [
+      {
+        "value": "前端",
+        "label": "前端"
+      },
+      {
+        "value": "后端",
+        "label": "后端"
+      },
+      {
+        "value": "数据",
+        "label": "数据"
+      },
+      {
+        "value": "DevOps",
+        "label": "DevOps"
+      },
+      {
+        "value": "文档",
+        "label": "文档"
+      },
+      {
+        "value": "设计",
+        "label": "设计"
+      },
+      {
+        "value": "通用",
+        "label": "通用"
+      }
+    ],
+    "scenario": [
+      {
+        "value": "编码",
+        "label": "编码"
+      },
+      {
+        "value": "调试",
+        "label": "调试"
+      },
+      {
+        "value": "代码审查",
+        "label": "代码审查"
+      },
+      {
+        "value": "测试",
+        "label": "测试"
+      },
+      {
+        "value": "写作",
+        "label": "写作"
+      },
+      {
+        "value": "调研",
+        "label": "调研"
+      },
+      {
+        "value": "自动化",
+        "label": "自动化"
+      }
+    ]
+  },
+  "items": [
+    {
+      "id": "reczz28IrHtxjYwu",
+      "type": "guide",
+      "name": "全局 AGENTS.md（Codex）",
+      "description": "所有项目通用的智能体行为约定：中文回复、UTF-8 编码、避免不必要的兼容代码、优先查阅本地参考文档。",
+      "scope": "全局",
+      "domains": [
+        "通用"
+      ],
+      "scenarios": [
+        "编码",
+        "写作"
+      ],
+      "link": "https://agents.md/",
+      "detail": {
+        "文件路径": "~/.codex/AGENTS.md",
+        "内容摘要": "语言要求：始终用中文回复；文件编码统一 UTF-8；不写不必要的兼容代码；参考文档优先查 reference/，其次用浏览器技能查官方文档；浏览器自动化使用 ego-browser / agent-browser。"
+      }
+    },
+    {
+      "id": "reczz28IrHtxi4Yo",
+      "type": "guide",
+      "name": "agent-toolchain-website AGENTS.md",
+      "description": "本站项目级指南：约定 Vite+（vp）工具链、Cloudflare Workers 部署与浏览器自动化方式。",
+      "scope": "项目",
+      "domains": [
+        "前端",
+        "DevOps"
+      ],
+      "scenarios": [
+        "编码",
+        "测试",
+        "自动化"
+      ],
+      "link": "https://viteplus.dev/guide/",
+      "detail": {
+        "文件路径": "agent-toolchain-website/AGENTS.md",
+        "内容摘要": "使用 vp 完成安装、开发、检查、测试与构建；生产环境部署到 Cloudflare Workers；网页自动化使用 ego-browser。"
+      }
+    },
+    {
+      "id": "reczz28IrIJQvhdb",
+      "type": "skill",
+      "name": "ego-browser",
+      "description": "面向人与智能体协作的 Chromium 浏览器自动化：打开网页、填表、截图、抓取数据与网页测试。",
+      "scope": "全局",
+      "domains": [
+        "前端",
+        "通用"
+      ],
+      "scenarios": [
+        "测试",
+        "调研",
+        "自动化"
+      ],
+      "link": "https://ego.app",
+      "detail": {
+        "来源仓库": "ego.app",
+        "安装路径": "~/.agents/skills/ego-browser",
+        "触发条件": "需要浏览器访问、网页操作或网页 QA 时默认使用。"
+      }
+    },
+    {
+      "id": "reczz28IrIJQwU7l",
+      "type": "skill",
+      "name": "frontend-design",
+      "description": "生成有设计感、可直接上线的前端界面，避免千篇一律的 AI 审美。",
+      "scope": "全局",
+      "domains": [
+        "前端",
+        "设计"
+      ],
+      "scenarios": [
+        "编码"
+      ],
+      "link": "https://github.com/anthropics/skills",
+      "detail": {
+        "来源仓库": "anthropics/skills",
+        "安装路径": "Claude 插件 anthropic-skills:frontend-design",
+        "触发条件": "需要构建网页、组件、落地页或美化 UI 时使用。"
+      }
+    },
+    {
+      "id": "reczz28IrIJQxPeT",
+      "type": "skill",
+      "name": "lark-base",
+      "description": "飞书多维表格操作：建表、字段、记录、视图、统计、表单、仪表盘、工作流与权限。",
+      "scope": "全局",
+      "domains": [
+        "数据"
+      ],
+      "scenarios": [
+        "自动化",
+        "调研"
+      ],
+      "link": "https://github.com/larksuite/cli",
+      "detail": {
+        "来源仓库": "larksuite/cli",
+        "安装路径": "~/.claude/skills/lark-base",
+        "触发条件": "遇到 Base / 多维表格 / bitable、/base/ 或 /app/ 链接时使用。"
+      }
+    },
+    {
+      "id": "reczz28IrILTq2rq",
+      "type": "mcp",
+      "name": "chrome-devtools",
+      "description": "通过 Chrome DevTools 协议驱动浏览器：导航、点击、截图、性能追踪与网络、控制台调试。",
+      "scope": "全局",
+      "domains": [
+        "前端"
+      ],
+      "scenarios": [
+        "调试",
+        "测试"
+      ],
+      "link": "https://github.com/ChromeDevTools/chrome-devtools-mcp",
+      "detail": {
+        "传输方式": "stdio",
+        "启动命令或 URL": "npx chrome-devtools-mcp@latest",
+        "提供的工具": "navigate_page, click, fill, take_screenshot, take_snapshot, performance_start_trace, list_network_requests, list_console_messages",
+        "认证方式": "无",
+        "配置示例": "{\n  \"mcpServers\": {\n    \"chrome-devtools\": {\n      \"command\": \"npx\",\n      \"args\": [\"chrome-devtools-mcp@latest\"]\n    }\n  }\n}"
+      }
+    },
+    {
+      "id": "reczz28IrILTs3s9",
+      "type": "mcp",
+      "name": "context7",
+      "description": "按需检索最新的库、框架、SDK 与 CLI 官方文档和代码示例。",
+      "scope": "全局",
+      "domains": [
+        "前端",
+        "后端",
+        "文档"
+      ],
+      "scenarios": [
+        "编码",
+        "调研"
+      ],
+      "link": "https://github.com/upstash/context7",
+      "detail": {
+        "传输方式": "Streamable HTTP",
+        "启动命令或 URL": "https://mcp.context7.com/mcp",
+        "提供的工具": "resolve-library-id, query-docs",
+        "认证方式": "API Key",
+        "配置示例": "{\n  \"mcpServers\": {\n    \"context7\": {\n      \"type\": \"http\",\n      \"url\": \"https://mcp.context7.com/mcp\",\n      \"headers\": { \"CONTEXT7_API_KEY\": \"<your-key>\" }\n    }\n  }\n}"
+      }
+    },
+    {
+      "id": "reczz28IrILTsJG7",
+      "type": "mcp",
+      "name": "jina",
+      "description": "联网搜索、网页转 Markdown、arXiv / SSRN 检索、截图与重排序等 Web 能力。",
+      "scope": "全局",
+      "domains": [
+        "通用",
+        "数据"
+      ],
+      "scenarios": [
+        "调研"
+      ],
+      "link": "https://github.com/jina-ai/MCP",
+      "detail": {
+        "传输方式": "Streamable HTTP",
+        "启动命令或 URL": "https://mcp.jina.ai/v1",
+        "提供的工具": "search_web, read_url, search_arxiv, search_images, capture_screenshot_url, sort_by_relevance",
+        "认证方式": "API Key",
+        "配置示例": "{\n  \"mcpServers\": {\n    \"jina\": {\n      \"type\": \"http\",\n      \"url\": \"https://mcp.jina.ai/v1\",\n      \"headers\": { \"Authorization\": \"Bearer <your-key>\" }\n    }\n  }\n}"
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "agent-toolchain",
+  "compatibility_date": "2026-10-01",
+  // 路由只匹配 /toolchain 和 /toolchain/*，不能写成 /toolchain*，否则会误匹配 /toolchain2 之类的路径
+  "routes": [
+    { "pattern": "agent.minority2310.com/toolchain", "zone_name": "minority2310.com" },
+    { "pattern": "agent.minority2310.com/toolchain/*", "zone_name": "minority2310.com" },
+  ],
+  // 构建产物在 dist/toolchain/，请求路径 /toolchain/... 直接对应到文件；未知路径返回 404
+  "assets": {
+    "directory": "./dist",
+  },
+}

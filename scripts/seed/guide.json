@@ -1,0 +1,24 @@
+{
+  "create_records": [
+    {
+      "名称": "全局 AGENTS.md（Codex）",
+      "描述": "所有项目通用的智能体行为约定：中文回复、UTF-8 编码、避免不必要的兼容代码、优先查阅本地参考文档。",
+      "范围": ["全局"],
+      "领域": ["通用"],
+      "场景": ["编码", "写作"],
+      "链接": "https://agents.md/",
+      "文件路径": "~/.codex/AGENTS.md",
+      "内容摘要": "语言要求：始终用中文回复；文件编码统一 UTF-8；不写不必要的兼容代码；参考文档优先查 reference/，其次用浏览器技能查官方文档；浏览器自动化使用 ego-browser / agent-browser。"
+    },
+    {
+      "名称": "agent-toolchain-website AGENTS.md",
+      "描述": "本站项目级指南：约定 Vite+（vp）工具链、Cloudflare Workers 部署与浏览器自动化方式。",
+      "范围": ["项目"],
+      "领域": ["前端", "DevOps"],
+      "场景": ["编码", "测试", "自动化"],
+      "链接": "https://viteplus.dev/guide/",
+      "文件路径": "agent-toolchain-website/AGENTS.md",
+      "内容摘要": "使用 vp 完成安装、开发、检查、测试与构建；生产环境部署到 Cloudflare Workers；网页自动化使用 ego-browser。"
+    }
+  ]
+}

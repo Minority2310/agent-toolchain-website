@@ -1,0 +1,43 @@
+{
+  "create_records": [
+    {
+      "名称": "context7",
+      "描述": "按需检索最新的库、框架、SDK 与 CLI 官方文档和代码示例。",
+      "范围": ["全局"],
+      "领域": ["前端", "后端", "文档"],
+      "场景": ["编码", "调研"],
+      "链接": "https://github.com/upstash/context7",
+      "传输方式": ["Streamable HTTP"],
+      "启动命令或 URL": "https://mcp.context7.com/mcp",
+      "提供的工具": "resolve-library-id, query-docs",
+      "认证方式": ["API Key"],
+      "配置示例": "{\n  \"mcpServers\": {\n    \"context7\": {\n      \"type\": \"http\",\n      \"url\": \"https://mcp.context7.com/mcp\",\n      \"headers\": { \"CONTEXT7_API_KEY\": \"<your-key>\" }\n    }\n  }\n}"
+    },
+    {
+      "名称": "jina",
+      "描述": "联网搜索、网页转 Markdown、arXiv / SSRN 检索、截图与重排序等 Web 能力。",
+      "范围": ["全局"],
+      "领域": ["通用", "数据"],
+      "场景": ["调研"],
+      "链接": "https://github.com/jina-ai/MCP",
+      "传输方式": ["Streamable HTTP"],
+      "启动命令或 URL": "https://mcp.jina.ai/v1",
+      "提供的工具": "search_web, read_url, search_arxiv, search_images, capture_screenshot_url, sort_by_relevance",
+      "认证方式": ["API Key"],
+      "配置示例": "{\n  \"mcpServers\": {\n    \"jina\": {\n      \"type\": \"http\",\n      \"url\": \"https://mcp.jina.ai/v1\",\n      \"headers\": { \"Authorization\": \"Bearer <your-key>\" }\n    }\n  }\n}"
+    },
+    {
+      "名称": "chrome-devtools",
+      "描述": "通过 Chrome DevTools 协议驱动浏览器：导航、点击、截图、性能追踪与网络、控制台调试。",
+      "范围": ["全局"],
+      "领域": ["前端"],
+      "场景": ["调试", "测试"],
+      "链接": "https://github.com/ChromeDevTools/chrome-devtools-mcp",
+      "传输方式": ["stdio"],
+      "启动命令或 URL": "npx chrome-devtools-mcp@latest",
+      "提供的工具": "navigate_page, click, fill, take_screenshot, take_snapshot, performance_start_trace, list_network_requests, list_console_messages",
+      "认证方式": ["无"],
+      "配置示例": "{\n  \"mcpServers\": {\n    \"chrome-devtools\": {\n      \"command\": \"npx\",\n      \"args\": [\"chrome-devtools-mcp@latest\"]\n    }\n  }\n}"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+# 依赖（pnpm）。pnpm-lock.yaml 要提交：Cloudflare 构建用 --frozen-lockfile 安装
+node_modules
+
+# 构建产物：Cloudflare Workers Builds 在云端重新构建，不需要提交
+dist
+dist-ssr
+
+# Wrangler / Workers 本地状态与密钥
+.wrangler
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+
+# 环境变量文件（站点是公开的，任何密钥都不能入库）
+.env
+.env.*
+!.env.example
+*.local
+
+# 日志
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# 测试覆盖率
+coverage
+
+# TypeScript 增量编译缓存（默认写在 node_modules/.tmp，别处生成时也不入库）
+*.tsbuildinfo
+
+# Claude Code 本机个人设置（项目共享的配置放在 .claude/ 下其他文件里，会被提交）
+.claude/settings.local.json
+
+# 编辑器与系统文件
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+Thumbs.db
+*.suo
+*.sw?
+
+# 以下文件需要提交，不要加进忽略列表：
+#   src/data/toolchain.json    飞书同步产物，云端构建直接使用它
+#   toolchain.config.json      多维表格的 baseToken 和 table_id，只是标识，不是密钥
+#   scripts/seed/              建表脚本用到的示例数据
+#   .node-version              固定 Cloudflare 构建使用的 Node 版本

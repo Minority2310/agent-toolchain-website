@@ -1,0 +1,67 @@
+{
+  "common": [
+    { "name": "名称", "type": "text" },
+    { "name": "描述", "type": "text" },
+    {
+      "name": "范围",
+      "type": "select",
+      "multiple": false,
+      "options": [{ "name": "全局" }, { "name": "项目" }, { "name": "目录" }]
+    },
+    {
+      "name": "领域",
+      "type": "select",
+      "multiple": true,
+      "options": [
+        { "name": "前端" },
+        { "name": "后端" },
+        { "name": "数据" },
+        { "name": "DevOps" },
+        { "name": "文档" },
+        { "name": "设计" },
+        { "name": "通用" }
+      ]
+    },
+    {
+      "name": "场景",
+      "type": "select",
+      "multiple": true,
+      "options": [
+        { "name": "编码" },
+        { "name": "调试" },
+        { "name": "代码审查" },
+        { "name": "测试" },
+        { "name": "写作" },
+        { "name": "调研" },
+        { "name": "自动化" }
+      ]
+    },
+    { "name": "链接", "type": "text", "style": { "type": "url" } }
+  ],
+  "guide": [
+    { "name": "文件路径", "type": "text" },
+    { "name": "内容摘要", "type": "text" }
+  ],
+  "skill": [
+    { "name": "来源仓库", "type": "text" },
+    { "name": "安装路径", "type": "text" },
+    { "name": "触发条件", "type": "text" }
+  ],
+  "mcp": [
+    {
+      "name": "传输方式",
+      "type": "select",
+      "multiple": false,
+      "options": [{ "name": "stdio" }, { "name": "Streamable HTTP" }, { "name": "SSE" }]
+    },
+    { "name": "启动命令或 URL", "type": "text" },
+    { "name": "提供的工具", "type": "text" },
+    {
+      "name": "认证方式",
+      "type": "select",
+      "multiple": false,
+      "options": [{ "name": "无" }, { "name": "API Key" }, { "name": "OAuth" }]
+    },
+    { "name": "配置示例", "type": "text" }
+  ]
+}

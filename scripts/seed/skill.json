@@ -1,0 +1,37 @@
+{
+  "create_records": [
+    {
+      "名称": "lark-base",
+      "描述": "飞书多维表格操作：建表、字段、记录、视图、统计、表单、仪表盘、工作流与权限。",
+      "范围": ["全局"],
+      "领域": ["数据"],
+      "场景": ["自动化", "调研"],
+      "链接": "https://github.com/larksuite/cli",
+      "来源仓库": "larksuite/cli",
+      "安装路径": "~/.claude/skills/lark-base",
+      "触发条件": "遇到 Base / 多维表格 / bitable、/base/ 或 /app/ 链接时使用。"
+    },
+    {
+      "名称": "frontend-design",
+      "描述": "生成有设计感、可直接上线的前端界面，避免千篇一律的 AI 审美。",
+      "范围": ["全局"],
+      "领域": ["前端", "设计"],
+      "场景": ["编码"],
+      "链接": "https://github.com/anthropics/skills",
+      "来源仓库": "anthropics/skills",
+      "安装路径": "Claude 插件 anthropic-skills:frontend-design",
+      "触发条件": "需要构建网页、组件、落地页或美化 UI 时使用。"
+    },
+    {
+      "名称": "ego-browser",
+      "描述": "面向人与智能体协作的 Chromium 浏览器自动化：打开网页、填表、截图、抓取数据与网页测试。",
+      "范围": ["全局"],
+      "领域": ["前端", "通用"],
+      "场景": ["测试", "调研", "自动化"],
+      "链接": "https://ego.app",
+      "来源仓库": "ego.app",
+      "安装路径": "~/.agents/skills/ego-browser",
+      "触发条件": "需要浏览器访问、网页操作或网页 QA 时默认使用。"
+    }
+  ]
+}
