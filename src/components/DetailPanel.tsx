@@ -1,15 +1,51 @@
 import { useEffect, useRef } from "react";
-import type { Item } from "../types.ts";
+import type { Field, Item } from "../types.ts";
 
-const PRE_FIELDS = new Set(["配置示例"]);
+/** 代码、命令类的字段用等宽字体原样显示 */
+const PRE_FIELDS = new Set(["配置示例", "安装命令"]);
 
-function hostOf(link: string): string {
-  return URL.canParse(link) ? new URL(link).host : link;
+function text(field: Field): string {
+  if ("files" in field) return field.files.map((file) => file.name).join("、");
+  return (Array.isArray(field.value) ? field.value.join("、") : field.value).trim();
 }
 
-function show(value: string | string[]): string {
-  const text = Array.isArray(value) ? value.join("、") : value;
-  return text.trim() || "—";
+function isUrl(value: string): boolean {
+  return /^https?:\/\//.test(value) && URL.canParse(value);
+}
+
+function formatSize(bytes: number): string {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
+}
+
+function FieldValue({ field }: { field: Field }) {
+  if ("files" in field && field.files.length > 0) {
+    return (
+      <ul className="detail-files">
+        {field.files.map((file) => (
+          <li key={file.path}>
+            {/* 文件在同步时放进站点的 files/ 目录；BASE_URL 带有站点的路径前缀 */}
+            <a href={`${import.meta.env.BASE_URL}${file.path}`} download={file.name}>
+              {file.name}
+            </a>
+            <span className="num"> {formatSize(file.size)}</span>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+  const value = text(field);
+  if (value === "") return <span className="empty-value">—</span>;
+  if (PRE_FIELDS.has(field.name)) return <pre>{value}</pre>;
+  if (isUrl(value)) {
+    return (
+      <a href={value} target="_blank" rel="noreferrer noopener">
+        {value}
+      </a>
+    );
+  }
+  return value;
 }
 
 interface Props {
@@ -47,38 +83,20 @@ export function DetailPanel({ item, number, typeLabel, onClose }: Props) {
         </h2>
         {item.description && <p className="detail-desc">{item.description}</p>}
 
+        {/* 三张表的字段不同：列出这张表的全部字段，顺序和飞书里一致，没有值的显示「—」 */}
         <dl className="detail-fields">
-          <div>
-            <dt>范围</dt>
-            <dd>{show(item.scope)}</dd>
-          </div>
-          <div>
-            <dt>领域</dt>
-            <dd>{show(item.domains)}</dd>
-          </div>
-          <div>
-            <dt>场景</dt>
-            <dd>{show(item.scenarios)}</dd>
-          </div>
-          {Object.entries(item.detail).map(([name, value]) => (
-            <div key={name} className={PRE_FIELDS.has(name) ? "is-wide" : undefined}>
-              <dt>{name}</dt>
+          {item.fields.map((field) => (
+            <div
+              key={field.name}
+              className={PRE_FIELDS.has(field.name) && text(field) !== "" ? "is-wide" : undefined}
+            >
+              <dt>{field.name}</dt>
               <dd>
-                {PRE_FIELDS.has(name) && !Array.isArray(value) && value ? (
-                  <pre>{value}</pre>
-                ) : (
-                  show(value)
-                )}
+                <FieldValue field={field} />
               </dd>
             </div>
           ))}
         </dl>
-
-        {item.link && (
-          <a className="detail-link" href={item.link} target="_blank" rel="noreferrer noopener">
-            打开 {hostOf(item.link)}
-          </a>
-        )}
       </div>
     </aside>
   );

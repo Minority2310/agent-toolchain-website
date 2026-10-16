@@ -272,6 +272,45 @@ button:disabled {
   min-width: 0;
 }
 
+/* 视图切换：三个大号文字标签，选中的加红色下划线 */
+.type-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 32px;
+  margin-bottom: 24px;
+}
+
+.type-tab {
+  padding-bottom: 6px;
+  border-bottom: 3px solid transparent;
+  color: var(--mute);
+  /* 跟着主区域宽度缩放：打开详情面板、主区域变窄时三个标签仍然排在一行 */
+  font-size: clamp(22px, 3.4cqw, 44px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.type-tab:hover {
+  color: var(--ink);
+}
+
+.type-tab[aria-selected="true"] {
+  color: var(--ink);
+  border-bottom-color: var(--red);
+}
+
+.type-tab-count {
+  margin-left: 8px;
+  font-size: var(--t-s);
+  letter-spacing: 0;
+  vertical-align: 0.6em;
+}
+
+.type-tab[aria-selected="true"] .type-tab-count {
+  color: var(--red);
+}
+
 .filter-bar {
   position: relative;
   display: flex;
@@ -328,6 +367,7 @@ button:disabled {
 
 .facet-trigger::after {
   content: "";
+  flex: none;
   width: 6px;
   height: 6px;
   border-right: 1.5px solid currentColor;
@@ -577,8 +617,7 @@ button:disabled {
 
 .card-button {
   display: grid;
-  grid-template-columns: auto 1fr;
-  column-gap: 12px;
+  grid-template-columns: 1fr;
   width: 100%;
   height: 100%;
   padding: 10px 0 0;
@@ -593,11 +632,6 @@ button:disabled {
 
 .card[aria-current="true"] .card-no {
   color: var(--red);
-}
-
-.card-type {
-  font-size: var(--t-s);
-  color: var(--grey);
 }
 
 .card-name {
@@ -722,6 +756,19 @@ button:disabled {
   overflow-wrap: anywhere;
 }
 
+.empty-value {
+  color: var(--mute);
+}
+
+.detail-files {
+  display: grid;
+  gap: 4px;
+}
+
+.detail-files .num {
+  color: var(--grey);
+}
+
 .detail-fields > .is-wide {
   grid-template-columns: 1fr;
   row-gap: 8px;
@@ -735,21 +782,6 @@ button:disabled {
   background: var(--wash);
   overflow-x: auto;
   white-space: pre;
-}
-
-.detail-link {
-  display: inline-block;
-  margin-top: 28px;
-  padding: 10px 16px 11px;
-  background: var(--ink);
-  color: var(--paper);
-  font-size: var(--t-s);
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.detail-link:hover {
-  background: var(--red);
 }
 
 /* ---------- 主区域变窄（容器查询：详情面板打开时同样生效） ---------- */
@@ -771,6 +803,18 @@ button:disabled {
 }
 
 @container (max-width: 700px) {
+  .type-tabs {
+    gap: 4px 20px;
+  }
+
+  .type-tab {
+    font-size: 20px;
+  }
+
+  .type-tab-count {
+    margin-left: 4px;
+  }
+
   .masthead {
     --reserve: 400px;
   }
@@ -808,15 +852,16 @@ button:disabled {
     grid-column: 2;
   }
 
+  /* 筛选字段的个数随表而变：每行最多三个，等分宽度 */
   .facet-menus {
     grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    flex-wrap: wrap;
   }
 
   /* 面板相对整条工具栏定位，和工具栏同宽 */
   .facet-menu {
     position: static;
+    flex: 1 1 calc(33.333% - 4px);
   }
 
   .facet-trigger {
@@ -872,6 +917,10 @@ button:disabled {
   .item-table tbody td:not(.col-no) {
     color: var(--grey);
     font-size: var(--t-xs);
+  }
+
+  .item-table tbody td:empty {
+    display: none;
   }
 
   .item-table tbody tr[aria-selected="true"] .col-no {

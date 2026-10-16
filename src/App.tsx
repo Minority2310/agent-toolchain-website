@@ -4,6 +4,7 @@ import { FacetBar } from "./components/FacetBar.tsx";
 import { Header } from "./components/Header.tsx";
 import { ItemGrid } from "./components/ItemGrid.tsx";
 import { ItemTable } from "./components/ItemTable.tsx";
+import { TypeTabs } from "./components/TypeTabs.tsx";
 import data from "./data/toolchain.json";
 import {
   EMPTY_FILTER,
@@ -15,15 +16,18 @@ import {
   toggleValue,
 } from "./lib/filter.ts";
 import { installPaging } from "./lib/paging.ts";
-import type { FacetKey, Item } from "./types.ts";
+import type { ItemType } from "./types.ts";
 
 const toolchain = data;
-const { items, facets } = toolchain;
+const { collections } = toolchain;
+const total = collections.reduce((sum, c) => sum + c.items.length, 0);
 
-const typeLabels = new Map(facets.type.map((option) => [option.value, option.label]));
-const typeLabel = (item: Item) => typeLabels.get(item.type) ?? item.type;
-
-const numbers = new Map(items.map((item, index) => [item.id, String(index + 1).padStart(2, "0")]));
+/** 编号在每个视图内从 01 开始，按视图里的全部条目排序 */
+const numbers = new Map(
+  collections.flatMap((c) =>
+    c.items.map((item, index) => [item.id, String(index + 1).padStart(2, "0")] as const),
+  ),
+);
 const numberOf = (id: string) => numbers.get(id) ?? "";
 
 function writeUrl(state: UrlState, mode: "push" | "replace") {
@@ -33,8 +37,8 @@ function writeUrl(state: UrlState, mode: "push" | "replace") {
 }
 
 export default function App() {
-  const [state, setState] = useState<UrlState>(() => decodeState(location.search));
-  const [openFacet, setOpenFacet] = useState<FacetKey | null>(null);
+  const [state, setState] = useState<UrlState>(() => decodeState(location.search, collections));
+  const [openFacet, setOpenFacet] = useState<string | null>(null);
 
   const update = useCallback((next: UrlState, mode: "push" | "replace" = "replace") => {
     setState(next);
@@ -44,13 +48,34 @@ export default function App() {
   useEffect(() => installPaging(), []);
 
   useEffect(() => {
-    const onPop = () => setState(decodeState(location.search));
+    const onPop = () => setState(decodeState(location.search, collections));
     addEventListener("popstate", onPop);
     return () => removeEventListener("popstate", onPop);
   }, []);
 
-  const results = useMemo(() => filterItems(items, state), [state]);
+  // collections 不会为空：同步脚本固定输出三个视图，decodeState 保证 type 是其中之一
+  const collection = collections.find((c) => c.type === state.type) ?? collections[0];
+  const { facets, items } = collection;
+
+  const results = useMemo(() => filterItems(items, facets, state), [items, facets, state]);
   const selected = state.item ? (items.find((item) => item.id === state.item) ?? null) : null;
+  // 标签上的数量只按搜索词算，不受当前视图里选的筛选字段影响
+  const tabs = useMemo(
+    () =>
+      collections.map((c) => ({
+        type: c.type,
+        label: c.label,
+        count: filterItems(c.items, [], { ...EMPTY_FILTER, q: state.q }).length,
+      })),
+    [state.q],
+  );
+
+  // 三张表的字段不同，换视图时筛选字段全部清空；搜索词和表格 / 卡片视图保留
+  const switchType = (type: ItemType) => {
+    if (type === state.type) return;
+    setOpenFacet(null);
+    update({ ...state, type, values: {}, item: null }, "push");
+  };
 
   const select = (id: string) => {
     if (id !== state.item) update({ ...state, item: id }, state.item ? "replace" : "push");
@@ -69,7 +94,7 @@ export default function App() {
       if (event.key !== "Escape") return;
       if (openFacet) {
         setOpenFacet(null);
-        document.querySelector<HTMLElement>(`[data-trigger="${openFacet}"]`)?.focus();
+        document.querySelector<HTMLElement>(`[data-trigger="${CSS.escape(openFacet)}"]`)?.focus();
       } else if (state.item) closeDetail();
     };
     addEventListener("keydown", onKey);
@@ -81,7 +106,7 @@ export default function App() {
   return (
     <div className="page" data-detail={selected ? "open" : "closed"}>
       <main className="main">
-        <Header total={items.length} generatedAt={toolchain.generatedAt} />
+        <Header total={total} generatedAt={toolchain.generatedAt} />
 
         {/* 第二屏：筛选 + 结果，至少一屏高，保证首屏引导按钮能把筛选区滚到顶部 */}
         <div className="screen">
@@ -90,9 +115,8 @@ export default function App() {
             items={items}
             state={state}
             openFacet={openFacet}
-            onToggle={(key: FacetKey, value: string) =>
-              update({ ...state, ...toggleValue(state, key, value) })
-            }
+            tabs={<TypeTabs tabs={tabs} active={state.type} onSelect={switchType} />}
+            onToggle={(name, value) => update({ ...state, ...toggleValue(state, name, value) })}
             onQuery={(q) => update({ ...state, q })}
             onClear={() => update({ ...state, ...EMPTY_FILTER })}
             onOpenFacet={setOpenFacet}
@@ -103,7 +127,12 @@ export default function App() {
               <span className="section-no num">02</span>
               结果
             </h2>
-            <div className="result-body">
+            <div
+              className="result-body"
+              id="results"
+              role="tabpanel"
+              aria-labelledby={`tab-${state.type}`}
+            >
               <div className="result-bar">
                 <p className="result-count" aria-live="polite">
                   <span className="num">{results.length}</span>
@@ -132,16 +161,16 @@ export default function App() {
               ) : state.view === "table" ? (
                 <ItemTable
                   items={results}
+                  facets={facets}
                   numberOf={numberOf}
-                  typeLabel={typeLabel}
                   selectedId={state.item}
                   onSelect={select}
                 />
               ) : (
                 <ItemGrid
                   items={results}
+                  facets={facets}
                   numberOf={numberOf}
-                  typeLabel={typeLabel}
                   selectedId={state.item}
                   onSelect={select}
                 />
@@ -159,7 +188,7 @@ export default function App() {
         <DetailPanel
           item={selected}
           number={numberOf(selected.id)}
-          typeLabel={typeLabel(selected)}
+          typeLabel={collection.label}
           onClose={closeDetail}
         />
       )}

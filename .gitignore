@@ -44,6 +44,7 @@ Thumbs.db
 
 # 以下文件需要提交，不要加进忽略列表：
 #   src/data/toolchain.json    飞书同步产物，云端构建直接使用它
+#   public/files/              同步时下载的附件，云端构建不能访问飞书，只能用提交进来的这份
 #   toolchain.config.json      多维表格的 baseToken 和 table_id，只是标识，不是密钥
 #   scripts/seed/              建表脚本用到的示例数据
 #   .node-version              固定 Cloudflare 构建使用的 Node 版本

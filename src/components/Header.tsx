@@ -32,7 +32,7 @@ export function Header({ total, generatedAt }: Props) {
       </h1>
       <div className="masthead-aside">
         <p className="masthead-lede">
-          我日常使用的 AGENTS.md 指南、Agent Skills 与 MCP 服务，按类型、范围、领域和场景整理。
+          我日常使用的 AGENTS.md 指南、Agent Skills 与 MCP 服务，按类型分开整理，可以逐项筛选。
         </p>
         <dl className="masthead-meta">
           <div>

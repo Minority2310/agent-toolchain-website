@@ -1,6 +1,7 @@
+import { itemValues } from "../lib/filter.ts";
 import type { ListProps } from "./ItemTable.tsx";
 
-export function ItemGrid({ items, numberOf, typeLabel, selectedId, onSelect }: ListProps) {
+export function ItemGrid({ items, facets, numberOf, selectedId, onSelect }: ListProps) {
   return (
     <ul className="item-grid">
       {items.map((item) => (
@@ -12,11 +13,10 @@ export function ItemGrid({ items, numberOf, typeLabel, selectedId, onSelect }: L
             data-item={item.id}
           >
             <span className="card-no num">{numberOf(item.id)}</span>
-            <span className="card-type">{typeLabel(item)}</span>
             <span className="card-name">{item.name}</span>
             {item.description && <span className="card-desc">{item.description}</span>}
             <span className="card-tags">
-              {[item.scope, ...item.domains, ...item.scenarios].join("　")}
+              {facets.flatMap(({ name }) => itemValues(item, name)).join("　")}
             </span>
           </button>
         </li>

@@ -1,14 +1,19 @@
-import type { Item } from "../types.ts";
+import { itemValues } from "../lib/filter.ts";
+import type { Facet, Item } from "../types.ts";
 
 export interface ListProps {
   items: Item[];
+  /** 当前视图的筛选字段，表格里每个字段一列 */
+  facets: Facet[];
   numberOf: (id: string) => string;
-  typeLabel: (item: Item) => string;
   selectedId: string | null;
   onSelect: (id: string) => void;
 }
 
-export function ItemTable({ items, numberOf, typeLabel, selectedId, onSelect }: ListProps) {
+export function ItemTable({ items, facets, numberOf, selectedId, onSelect }: ListProps) {
+  // 主区域变窄时只留第一个字段列，其余列加 col-tags 由样式隐藏
+  const cellClass = (index: number) => (index === 0 ? undefined : "col-tags");
+
   return (
     <table className="item-table">
       <thead>
@@ -17,14 +22,11 @@ export function ItemTable({ items, numberOf, typeLabel, selectedId, onSelect }: 
             编号
           </th>
           <th scope="col">名称</th>
-          <th scope="col">类型</th>
-          <th scope="col">范围</th>
-          <th scope="col" className="col-tags">
-            领域
-          </th>
-          <th scope="col" className="col-tags">
-            场景
-          </th>
+          {facets.map(({ name }, index) => (
+            <th scope="col" key={name} className={cellClass(index)}>
+              {name}
+            </th>
+          ))}
         </tr>
       </thead>
       <tbody>
@@ -41,10 +43,11 @@ export function ItemTable({ items, numberOf, typeLabel, selectedId, onSelect }: 
               </button>
               {item.description && <span className="row-desc">{item.description}</span>}
             </th>
-            <td>{typeLabel(item)}</td>
-            <td>{item.scope}</td>
-            <td className="col-tags">{item.domains.join("、")}</td>
-            <td className="col-tags">{item.scenarios.join("、")}</td>
+            {facets.map(({ name }, index) => (
+              <td key={name} className={cellClass(index)}>
+                {itemValues(item, name).join("、")}
+              </td>
+            ))}
           </tr>
         ))}
       </tbody>
