@@ -19,15 +19,38 @@
 | ------------------------- | --------------------------------------------------------------- |
 | `src/`                    | 页面源码，入口是 `main.tsx` / `App.tsx`                         |
 | `src/lib/filter.ts`       | 按视图筛选、计数和 URL 状态，测试在 `filter.test.ts`            |
-| `public/files/`           | 同步时下载的附件，要提交到仓库                                  |
-| `scripts/normalize.ts`    | 把一张飞书表规整成页面用的数据，测试在 `normalize.test.ts`      |
 | `src/lib/paging.ts`       | 两屏之间整页切换                                                |
 | `src/data/toolchain.json` | 同步产物，要提交到仓库                                          |
-| `scripts/sync.ts`         | 从飞书导出数据，生成上面的 JSON                                 |
+| `public/files/`           | 同步时下载的附件，要提交到仓库                                  |
+| `scripts/sync.ts`         | 从飞书读取数据，生成上面的 JSON 并下载附件                      |
+| `scripts/normalize.ts`    | 把一张飞书表规整成页面用的数据，测试在 `normalize.test.ts`      |
 | `scripts/setup-base.sh`   | 一次性创建多维表格和示例数据（已经执行过）                      |
 | `toolchain.config.json`   | 多维表格的 `baseToken` 和 3 个 `table_id`，只是标识，不是密钥   |
 | `vite.config.ts`          | 构建配置，`base` 和 `outDir` 决定了站点所在的路径 `/toolchain/` |
 | `wrangler.jsonc`          | Workers 配置：只有静态资源（没有 Worker 脚本）和域名路由        |
+
+## 日常更新数据
+
+在飞书里改了数据之后，只需要这几步。**注意要把附件目录 `public/files` 一起提交**，只提交 `toolchain.json` 会漏掉新增或删除的附件。
+
+```bash
+vp run sync
+```
+
+```bash
+git add src/data/toolchain.json public/files && git commit -m "同步工具链数据" && git push
+```
+
+1. `vp run sync`：从飞书导出数据，更新 `src/data/toolchain.json` 和 `public/files/`。先看一眼命令输出里的条目数和「警告」。
+2. 提交并推送到 `main`：Cloudflare 会自动拉取代码、构建并部署，通常一两分钟内完成。
+3. 看结果：在 GitHub 上打开最新提交，旁边的检查标记（「Workers Builds: agent-toolchain-website」）变绿就是部署成功；点进去可以看到构建日志。然后访问 <https://agent.minority2310.com/toolchain/> 确认。
+
+说明：
+
+- 每次同步都会更新 `generatedAt`（页面上的「同步时间」），所以每次都会产生一个提交，即使飞书里的数据没有变化。
+- 只改了页面代码、没改数据时，不需要执行 `vp run sync`，直接提交推送即可。
+- 提交前建议先执行 `vp check` 和 `vp test`，见「开发环境」。
+- 第一次在新机器上同步前，要先完成 lark-cli 的授权，见「开发环境」的第 4 步。
 
 ## 开发环境
 
@@ -37,7 +60,11 @@
 - **vp（Vite+ CLI）**：安装方式见 <https://viteplus.dev>。包管理器由 vp 管理，`package.json` 的 `devEngines` 里固定为 pnpm 12.8.1，不需要另外安装。
 - **lark-cli**：只有同步数据时才需要。
 
-### 2. 安装依赖并启动
+### 2. 克隆仓库、安装依赖并启动
+
+```bash
+git clone https://github.com/Minority2310/agent-toolchain-website.git && cd agent-toolchain-website
+```
 
 ```bash
 vp install
@@ -81,7 +108,9 @@ lark-cli config init --new
 lark-cli auth login --domain base
 ```
 
-之后每次在飞书里改了数据，执行：
+授权会过期（这台机器上看到的刷新期限是 7 天）。过期后同步会报 `need_user_authorization` 或 `token_missing`，重新执行上面的 `lark-cli auth login --domain base` 即可。
+
+每次在飞书里改了数据，执行：
 
 ```bash
 vp run sync
@@ -114,11 +143,7 @@ vp run sync
 - `主字段「xxx」不是文本字段`：第一个视图的第一个字段不是文本，调整视图的字段顺序。
 - `筛选字段名「xxx」是保留名`：给这个单选或多选字段改个名字。
 
-同步完成后检查改动并提交：
-
-```bash
-git add src/data/toolchain.json && git commit -m "同步工具链数据"
-```
+同步完成后提交并推送，完整步骤见上面的「日常更新数据」。
 
 ## 生产环境：Cloudflare Workers Builds（从 GitHub 拉取部署）
 
@@ -128,12 +153,10 @@ Cloudflare 的构建环境里没有飞书授权，所以**云端只构建，不�
 
 ### 1. 推送到 GitHub
 
-```bash
-git init && git add . && git commit -m "初始化"
-```
+仓库是 <https://github.com/Minority2310/agent-toolchain-website>，已经建好。如果在一个全新的仓库里重新搭建，用 HTTPS 地址添加远程（没有配置 SSH 密钥的机器上，SSH 地址会报 `Permission denied (publickey)`）：
 
 ```bash
-git remote add origin git@github.com:<你的账号>/agent-toolchain-website.git && git push -u origin main
+git remote add origin https://github.com/<你的账号>/agent-toolchain-website.git && git push -u origin main
 ```
 
 ### 2. 在 Cloudflare 连接仓库
@@ -189,11 +212,7 @@ Node.js 版本由仓库里的 `.node-version`（`24`）决定，不需要另外�
 - `?item=<记录 ID>` 能直接打开详情面板。
 - 未知路径（例如 `/toolchain/foo/bar`）和根路径 `/` 返回 404。站点没有前端路由，只用查询参数，所以不需要兜底到首页。
 
-之后日常更新数据的流程是：
-
-```bash
-vp run sync && git add src/data/toolchain.json && git commit -m "同步工具链数据" && git push
-```
+之后日常更新数据的流程见上面的「日常更新数据」。
 
 非 `main` 分支的推送会生成预览版本，可以在 **Settings → Builds** 里关闭。
 
@@ -213,13 +232,16 @@ vp run deploy
 
 ## 常见问题
 
+- **推送后 Cloudflare 没有触发构建**：先看 GitHub 上最新提交旁边有没有「Workers Builds」检查。没有，说明 Cloudflare 没有收到这次推送，按顺序排查：① Worker 的 Settings → Builds 里 Git 存储库是否已连接、生产分支是不是 `main`、「Disable builds」是否关闭；② GitHub 的 <https://github.com/settings/installations> 里 Cloudflare Workers and Pages 对这个仓库是否有访问权限、有没有被暂停；③ 仍然不行，就在 Settings → Builds 里断开连接再重新连接，或者删除 Worker 后按「在 Cloudflare 连接仓库」重建（构建变量要重新设置）。重新连接后推送一个空提交即可验证：`git commit --allow-empty -m "触发构建" && git push`。
+- **构建失败**：点开 GitHub 上那个检查（或 Cloudflare 的 Builds 页面）看日志，对照下面几条。
 - **访问 `agent.minority2310.com/toolchain/` 超时或报 `ERR_NAME_NOT_RESOLVED`**：这个子域名没有 DNS 记录，或者记录没有开启代理，见「绑定域名和路径」。
 - **页面空白、控制台里 JS 和 CSS 返回 404**：`base` 和 `outDir` 没有同时对应 `/toolchain/`，检查 `vite.config.ts`。
 - **部署报路由所在的 zone 找不到**：`wrangler.jsonc` 里的 `zone_name` 必须是这个账号下已有的域名 `minority2310.com`，部署用的 API token 也要有这个域名的 Workers Routes 编辑权限。
 - **构建报 Worker 名称不匹配**：Cloudflare 里的 Worker 名称必须和 `wrangler.jsonc` 的 `name`（`agent-toolchain-website`）一致。
 - **构建时 pnpm 版本不对或者安装失败**：检查是否设置了构建变量 `PNPM_VERSION=12.8.1`。
 - **部署步骤报 `EBADDEVENGINES`**：部署命令还是默认的 `npx wrangler deploy`，改成 `pnpm exec wrangler deploy`。
-- **`vp run sync` 报权限错误**：重新执行 `lark-cli auth login --domain base`，确认当前账号对多维表格有读取权限。
+- **`vp run sync` 报 `need_user_authorization`、`token_missing` 或权限错误**：飞书授权过期了，重新执行 `lark-cli auth login --domain base`，确认当前账号对多维表格有读取权限。
+- **线上缺少附件，或附件还是旧的**：提交时漏了 `public/files`，补上 `git add public/files` 后重新提交推送。
 - **同步报「值不在选项中」**：飞书里某条记录用了表格没有定义的选项。先在飞书里补上这个选项或修正记录，再重新同步。
 - **新增的单选字段没有出现在筛选里**：确认已经重新执行 `vp run sync` 并提交了 `src/data/toolchain.json`；单选和多选之外的类型不会成为筛选项。
 - **`scripts/setup-base.sh` 中途失败**：这个脚本不是幂等的，直接重跑会再建一个新的多维表格。应该先删掉已经建好的部分，或者手动补完剩下的步骤，最后把 token 写回 `toolchain.config.json`。
