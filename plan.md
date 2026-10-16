@@ -108,7 +108,7 @@ agent-toolchain-website/
 
 `wrangler.jsonc`：
 ```jsonc
-{ "name": "agent-toolchain", "compatibility_date": "2026-10-01",
+{ "name": "agent-toolchain-website", "compatibility_date": "2026-10-01",
   "routes": [
     { "pattern": "agent.minority2310.com/toolchain", "zone_name": "minority2310.com" },
     { "pattern": "agent.minority2310.com/toolchain/*", "zone_name": "minority2310.com" } ],

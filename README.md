@@ -144,7 +144,7 @@ git remote add origin git@github.com:<你的账号>/agent-toolchain-website.git 
 
 | 设置项         | 值                          | 说明                                                                                                          |
 | -------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| Project name   | `agent-toolchain`           | **必须**和 `wrangler.jsonc` 里的 `name` 一致，否则构建会失败                                                  |
+| Project name   | `agent-toolchain-website`   | **必须**和 `wrangler.jsonc` 里的 `name` 一致，否则构建会失败                                                  |
 | Git branch     | `main`                      | 推送到这个分支时部署到生产环境                                                                                |
 | Build command  | `pnpm run build`            | 执行 `vp build`，输出到 `dist/toolchain/`                                                                     |
 | Deploy command | `pnpm exec wrangler deploy` | **不能用**默认的 `npx wrangler deploy`：`package.json` 的 `devEngines` 限定了 pnpm，npm 会报 `EBADDEVENGINES` |
@@ -216,7 +216,7 @@ vp run deploy
 - **访问 `agent.minority2310.com/toolchain/` 超时或报 `ERR_NAME_NOT_RESOLVED`**：这个子域名没有 DNS 记录，或者记录没有开启代理，见「绑定域名和路径」。
 - **页面空白、控制台里 JS 和 CSS 返回 404**：`base` 和 `outDir` 没有同时对应 `/toolchain/`，检查 `vite.config.ts`。
 - **部署报路由所在的 zone 找不到**：`wrangler.jsonc` 里的 `zone_name` 必须是这个账号下已有的域名 `minority2310.com`，部署用的 API token 也要有这个域名的 Workers Routes 编辑权限。
-- **构建报 Worker 名称不匹配**：Cloudflare 里的 Worker 名称必须和 `wrangler.jsonc` 的 `name`（`agent-toolchain`）一致。
+- **构建报 Worker 名称不匹配**：Cloudflare 里的 Worker 名称必须和 `wrangler.jsonc` 的 `name`（`agent-toolchain-website`）一致。
 - **构建时 pnpm 版本不对或者安装失败**：检查是否设置了构建变量 `PNPM_VERSION=12.8.1`。
 - **部署步骤报 `EBADDEVENGINES`**：部署命令还是默认的 `npx wrangler deploy`，改成 `pnpm exec wrangler deploy`。
 - **`vp run sync` 报权限错误**：重新执行 `lark-cli auth login --domain base`，确认当前账号对多维表格有读取权限。
