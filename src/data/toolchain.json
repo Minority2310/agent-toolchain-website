@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-20T09:06:15.026Z",
+  "generatedAt": "2026-10-22T08:35:52.058Z",
   "collections": [
     {
       "type": "guide",
@@ -560,6 +560,51 @@
             {
               "name": "安装命令",
               "value": ""
+            },
+            {
+              "name": "提示词",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "reczz28QNAgBgDLs",
+          "name": "Impeccable",
+          "description": "把 AI 粗制滥造的产物变成你引以为傲、愿意发布的界面。Impeccable 为你的智能体提供设计专业能力，让它从零构建、改进现有成果，并始终忠于你的设计系统。",
+          "fields": [
+            {
+              "name": "技能类型",
+              "value": [
+                "独立技能"
+              ]
+            },
+            {
+              "name": "生效范围",
+              "value": [
+                "用户目录"
+              ]
+            },
+            {
+              "name": "场景",
+              "value": [
+                "UI 设计"
+              ]
+            },
+            {
+              "name": "网址",
+              "value": "https://impeccable.style/"
+            },
+            {
+              "name": "源仓库",
+              "value": "https://github.com/pbakaus/impeccable"
+            },
+            {
+              "name": "教程",
+              "value": "https://impeccable.style/docs/"
+            },
+            {
+              "name": "安装命令",
+              "value": "npx skills add pbakaus/impeccable"
             },
             {
               "name": "提示词",
