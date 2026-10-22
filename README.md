@@ -1,6 +1,8 @@
 # 智能体工具链
 
-一个静态网站，汇总我日常使用的智能体工具链：AGENTS.md 指南、Agent Skills 和 MCP 服务。页面顶部的切换栏可以在「AGENTS.md」「Skills」「MCP 服务」三个视图之间切换，每个视图的表格列和筛选项都取自对应那张飞书表自己的字段，三张表的字段不需要一致。
+常用 AGENTS.md 指南、Agent Skills 与 MCP 服务。按类型分开整理，可以逐项筛选。
+
+这是一个静态网站。页面顶部的切换栏可以在「AGENTS.md」「Skills」「MCP 服务」三个视图之间切换，每个视图的表格列和筛选项都取自对应那张飞书表自己的字段，三张表的字段不需要一致。
 
 - **数据**：存放在飞书多维表格「智能体工具链」里，有 3 张表，用 lark-cli 导出成 `src/data/toolchain.json`。这个文件要提交到仓库。
 - **构建**：使用 [Vite+](https://viteplus.dev)（`vp`）+ React 19 + TypeScript。
