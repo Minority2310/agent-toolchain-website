@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-22T08:35:52.058Z",
+  "generatedAt": "2026-11-10T03:24:12.869Z",
   "collections": [
     {
       "type": "guide",
@@ -45,6 +45,10 @@
           "description": "项目通用的智能体行为约定。使用 agent-browser 进行浏览器自动化操作。",
           "fields": [
             {
+              "name": "备注",
+              "value": ""
+            },
+            {
               "name": "生效范围",
               "value": [
                 "用户目录"
@@ -83,6 +87,10 @@
           "name": "智能体通用模板一",
           "description": "项目通用的智能体行为约定。使用 ego-browser 进行浏览器自动化操作。",
           "fields": [
+            {
+              "name": "备注",
+              "value": ""
+            },
             {
               "name": "生效范围",
               "value": [
@@ -156,7 +164,8 @@
             "设计",
             "搜索",
             "计划",
-            "写作规范"
+            "写作规范",
+            "课程制作"
           ]
         }
       ],
@@ -166,6 +175,10 @@
           "name": "飞书 CLI(Lark-Cli) Skills",
           "description": "飞书 CLI 技能库",
           "fields": [
+            {
+              "name": "备注",
+              "value": ""
+            },
             {
               "name": "技能类型",
               "value": [
@@ -212,6 +225,10 @@
           "description": "Anthropics 技能库",
           "fields": [
             {
+              "name": "备注",
+              "value": ""
+            },
+            {
               "name": "技能类型",
               "value": [
                 "技能库"
@@ -256,6 +273,10 @@
           "name": "AnySearch Skill",
           "description": "面向 AI 智能体的统一实时搜索引擎 skill。支持通用网络搜索、垂直领域搜索、并行批量搜索，以及整页内容提取。",
           "fields": [
+            {
+              "name": "备注",
+              "value": ""
+            },
             {
               "name": "技能类型",
               "value": [
@@ -302,6 +323,10 @@
           "description": "API 开发调试、自动化测试技能库",
           "fields": [
             {
+              "name": "备注",
+              "value": ""
+            },
+            {
               "name": "技能类型",
               "value": [
                 "技能套件"
@@ -346,6 +371,10 @@
           "name": "baoyu-comic",
           "description": "baoyu 漫画生成",
           "fields": [
+            {
+              "name": "备注",
+              "value": ""
+            },
             {
               "name": "技能类型",
               "value": [
@@ -392,6 +421,10 @@
           "description": "本项目是一份面向中文技术文档、产品文案与界面文案的写作 Skill，支持撰写、改写、校对和审阅。",
           "fields": [
             {
+              "name": "备注",
+              "value": ""
+            },
+            {
               "name": "技能类型",
               "value": [
                 "独立技能"
@@ -437,6 +470,10 @@
           "description": "这些是 Cloudflare 提供的官方指南，用于在 Cloudflare 平台上搭建良好的 AI 开发环境以进行构建和部署。所有命令均经过 Cloudflare 验证，可直接使用。",
           "fields": [
             {
+              "name": "备注",
+              "value": ""
+            },
+            {
               "name": "技能类型",
               "value": [
                 "技能库"
@@ -481,6 +518,10 @@
           "name": "ego-browser skills",
           "description": "面向人与智能体协作的 Chromium 浏览器自动化：打开网页、填表、截图、抓取数据与网页测试。",
           "fields": [
+            {
+              "name": "备注",
+              "value": ""
+            },
             {
               "name": "技能类型",
               "value": [
@@ -528,6 +569,10 @@
           "description": "一种不懈的访谈技能，通过系统化提问对计划和设计进行压力测试。",
           "fields": [
             {
+              "name": "备注",
+              "value": ""
+            },
+            {
               "name": "技能类型",
               "value": [
                 "独立技能"
@@ -572,6 +617,10 @@
           "name": "Impeccable",
           "description": "把 AI 粗制滥造的产物变成你引以为傲、愿意发布的界面。Impeccable 为你的智能体提供设计专业能力，让它从零构建、改进现有成果，并始终忠于你的设计系统。",
           "fields": [
+            {
+              "name": "备注",
+              "value": ""
+            },
             {
               "name": "技能类型",
               "value": [
@@ -618,6 +667,10 @@
           "description": "为海报、Zine、肖像、包装与视觉观察笔记而生的单色 / 受控双色编辑图像 Skill。",
           "fields": [
             {
+              "name": "备注",
+              "value": ""
+            },
+            {
               "name": "技能类型",
               "value": [
                 "独立技能"
@@ -663,6 +716,10 @@
           "description": "AI Agent 的技能层。让你的 AI Agent 自动发现、比较并安装正确的可复用 Skill。",
           "fields": [
             {
+              "name": "备注",
+              "value": ""
+            },
+            {
               "name": "技能类型",
               "value": [
                 "技能库"
@@ -703,10 +760,63 @@
           ]
         },
         {
+          "id": "reczz28Xp3FzgXoo",
+          "name": "papermorph",
+          "description": "一种可将书籍转化为带动画、旁白和交互的网页体验的 AI 技能",
+          "fields": [
+            {
+              "name": "备注",
+              "value": "原项目介绍中只支持 claude code 和 opencode"
+            },
+            {
+              "name": "技能类型",
+              "value": [
+                "技能套件"
+              ]
+            },
+            {
+              "name": "生效范围",
+              "value": [
+                "用户目录"
+              ]
+            },
+            {
+              "name": "场景",
+              "value": [
+                "课程制作"
+              ]
+            },
+            {
+              "name": "网址",
+              "value": "https://papermorph.diamonddoge.org/"
+            },
+            {
+              "name": "源仓库",
+              "value": "https://github.com/DozenTwelve/Papermorph"
+            },
+            {
+              "name": "教程",
+              "value": ""
+            },
+            {
+              "name": "安装命令",
+              "value": "npx skills add DozenTwelve/Papermorph --skill papermorph --agent claude-code   # or --agent opencode"
+            },
+            {
+              "name": "提示词",
+              "value": ""
+            }
+          ]
+        },
+        {
           "id": "reczz28LDKOsMTOV",
           "name": "reverse-skill",
           "description": "AI coding clients 逆向/渗透/安全技能路由包",
           "fields": [
+            {
+              "name": "备注",
+              "value": ""
+            },
             {
               "name": "技能类型",
               "value": [
@@ -753,6 +863,10 @@
           "description": "一种编码代理技能，可将你的代理转变为安全审计员。它通过侦察、覆盖导向的搜寻、候选验证、结构化输出、独立记录核实和目标中立报告来编排隔离代理。",
           "fields": [
             {
+              "name": "备注",
+              "value": ""
+            },
+            {
               "name": "技能类型",
               "value": [
                 "独立技能"
@@ -797,6 +911,10 @@
           "name": "UI UX Pro Max",
           "description": "为跨平台和框架构建专业 UI/UX 提供设计智能的 AI 技能。",
           "fields": [
+            {
+              "name": "备注",
+              "value": ""
+            },
             {
               "name": "技能类型",
               "value": [
@@ -843,6 +961,10 @@
           "description": "Vercel 技能管理库",
           "fields": [
             {
+              "name": "备注",
+              "value": ""
+            },
+            {
               "name": "技能类型",
               "value": [
                 "技能库"
@@ -887,6 +1009,10 @@
           "name": "Web Access",
           "description": "让你的 AI Agent 能看、能操作、能上网。\n直连你日常使用的 Chrome 浏览器，天然携带登录态。搜索、浏览、点击、提取 — Agent 像你一样操作网页。",
           "fields": [
+            {
+              "name": "备注",
+              "value": ""
+            },
             {
               "name": "技能类型",
               "value": [
@@ -934,6 +1060,10 @@
           "description": "这是一个面向 Agent 的安全技能知识库，覆盖 Web 安全、API 安全、认证与授权、操作系统提权（Linux/Windows/macOS）、Active Directory 攻击、移动安全、二进制漏洞利用（Pwn）、逆向工程、密码学攻击、区块链与智能合约安全、AI/ML 与 LLM 安全、网络协议与横向移动、数字取证——服务于漏洞赏金、渗透测试、CTF 竞赛和授权安全研究。",
           "fields": [
             {
+              "name": "备注",
+              "value": ""
+            },
+            {
               "name": "技能类型",
               "value": [
                 "技能套件"
@@ -978,6 +1108,10 @@
           "name": "Yak Skills",
           "description": "面向 AI Agent 的 Yaklang 编程与 Yak 热加载知识库。一个总入口 + 多个专题，每个 skill 都配可一键自测的 .yak 示例，并提供命令行验证器与端到端证据。",
           "fields": [
+            {
+              "name": "备注",
+              "value": ""
+            },
             {
               "name": "技能类型",
               "value": [
@@ -1080,6 +1214,10 @@
           "description": "通过 Chrome DevTools 协议驱动浏览器：导航、点击、截图、性能追踪与网络、控制台调试。",
           "fields": [
             {
+              "name": "备注",
+              "value": ""
+            },
+            {
               "name": "范围",
               "value": [
                 "全局"
@@ -1133,6 +1271,10 @@
           "name": "context7",
           "description": "按需检索最新的库、框架、SDK 与 CLI 官方文档和代码示例。",
           "fields": [
+            {
+              "name": "备注",
+              "value": ""
+            },
             {
               "name": "范围",
               "value": [
@@ -1189,6 +1331,10 @@
           "name": "jina",
           "description": "联网搜索、网页转 Markdown、arXiv / SSRN 检索、截图与重排序等 Web 能力。",
           "fields": [
+            {
+              "name": "备注",
+              "value": ""
+            },
             {
               "name": "范围",
               "value": [
